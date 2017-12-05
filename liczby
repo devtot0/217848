@@ -1,0 +1,78 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include<string>
+#include <cstdlib>
+
+class Value
+{
+	int n;
+public:
+	Value(int n)
+	{
+		this->n = n;
+	}
+	~Value()
+	{
+
+	}
+
+	int get_value()
+	{
+		return n;
+	}
+
+};
+
+
+using namespace std;
+
+int main()
+{
+    string inputName, outputName, line;
+    vector<Value> integers;
+    cout << "Enter the name of an input file" << endl; cin>>inputName;
+    cout << "Enter the name of an output file" << endl; cin>>outputName;
+
+    ifstream inputFile;
+    ofstream outputFile;
+
+    outputFile.open(outputName.c_str(), ios::out);
+    inputFile.open(inputName.c_str(), ios::in);
+
+    while(getline(inputFile, line))
+    {
+        string temp=" ";
+        for(int i=0; i<line.length();i++)
+        {
+            if (line[i]==' ')
+            {
+                integers.push_back(Value(atoi(temp.c_str())));
+            }
+            else if(i == line.length() - 1)
+            {
+                temp += line[i];
+				integers.push_back(Value(atoi(temp.c_str())));
+            }
+
+            else
+			{
+				temp += line[i];
+			}
+
+        }
+
+    }
+    for (int i = 0; i < integers.size(); i++)
+	{
+		if (integers[i].get_value() % 10 == integers[i].get_value() / 100 )
+		{
+			outputFile << integers[i].get_value() << endl;
+			cout << integers[i].get_value() << endl;
+		}
+	}
+	inputFile.close();
+	outputFile.close();
+    return 0;
+}
+//integers[i].get_value() % 10 == integers[i].get_value() / 100
