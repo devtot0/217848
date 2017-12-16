@@ -1,0 +1,215 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Car
+{
+public:
+    string brand;
+    string colour;
+    int year;
+
+
+    Car(string br, string col, int y)
+    {
+        brand=br;
+        colour=col;
+        year=y;
+    }
+
+    Car()
+    {
+
+    }
+
+    ~Car()
+    {
+
+    }
+
+
+};
+
+int main()
+{
+    string name;
+    cout << "Enter the name of a file you wish to open:" << endl;
+    cin>>name;
+    name+=".txt";
+    vector<Car> tab;
+    /*==============AUXILLARY VARIABLES==============*/
+    string buf1, buf2;
+    int buf3;
+    int i=0;
+    string temp_brand;
+    string temp_colour;
+    int temp_year;
+    int car_selection;
+    char attribute_selection;
+    string output_name;
+    /*================================================*/
+
+
+    ifstream inputFile;
+    ofstream outputFile;
+    inputFile.open(name.c_str(), ios::in);
+    if(inputFile.good())
+    {
+        cout<<"opening "<<name<<"..."<<endl<<endl;
+    }
+    else
+    {
+        cout<<"error"<<endl;
+    }
+    while(!inputFile.eof())
+    {
+        inputFile>>buf1>>buf2>>buf3;
+        Car sample(buf1, buf2, buf3);
+        tab.push_back(sample);
+        cout<<i+1<<". "<<endl;
+        cout<<"Brand: "<<tab[i].brand<<endl;
+        cout<<"Colour: "<<tab[i].colour<<endl;
+        cout<<"Year: "<<tab[i].year<<endl<<endl;
+        i++;
+
+
+    }
+    int elements=i;
+
+    char selection;
+
+
+    while(true)
+    {
+        if(selection=='q')
+        {
+            cout<<"quitting..."<<endl;
+            break;
+        }
+
+        cout<<"============~MAIN MENU~============"<<endl;
+        cout<<"What do you want to do?"<<endl;
+        cout<<"1 - change the specifications of an existing car"<<endl;
+        cout<<"2 - add a new car"<<endl;
+        cout<<"3 - delete a car"<<endl;
+        cout<<"q - quit program"<<endl;
+        cout<<"s - save file"<<endl;
+        cin>>selection;
+
+
+        if(selection=='1')
+        {
+            cout<<"Which car do you wish to modify?"<<endl;
+            cin>>car_selection;
+            while(true)
+            {
+                cout<<"What attribute do you want to modify?"<<endl;
+                cout<<"1 - brand"<<endl;
+                cout<<"2 - colour"<<endl;
+                cout<<"3 - year of production"<<endl;
+                cout<<"q - quit edition"<<endl;
+                cin>>attribute_selection;
+
+                if(attribute_selection=='q')
+                {
+                    break;
+                }
+                if(attribute_selection=='1')
+                {
+                    cout<<"Enter the brand name:"<<endl;
+                    cin>>tab[car_selection-1].brand;
+                }
+
+                if(attribute_selection=='2')
+                {
+                    cout<<"Change the colour:"<<endl;
+                    cin>>tab[car_selection-1].colour;
+                }
+
+                if(attribute_selection=='3')
+                {
+                    cout<<"Enter the year:"<<endl;
+                    cin>>tab[car_selection-1].year;
+                }
+
+
+
+            }
+        }
+        if(selection=='2')
+        {
+            cout << "Enter the name of the brand: " << endl;
+            cin >> temp_brand;
+            cout << "Enter the colour of a car: " << endl;
+            cin >> temp_colour;
+            cout << "Enter the year of production: " << endl;
+            cin >> temp_year;
+
+            Car new_car(temp_brand, temp_colour, temp_year);
+            tab.push_back(new_car); elements++;
+            cout << " " << endl;
+            cout << "New car has been added!" << endl;
+
+            cout<<"temp"<<endl;
+        }
+        if(selection=='3')
+        {
+
+
+            cout<<"temp"<<endl;
+        }
+
+        if(selection=='s')
+        {
+            cout<<"Enter the name of the output file"<<endl;
+            cin>>output_name;
+            output_name+=".txt";
+
+            outputFile.open(output_name.c_str(), ios::out);
+
+            for(int j=0; j<elements; j++)
+            {
+
+
+
+                outputFile<<j+1<<". "<<endl;
+                outputFile<<"Brand: "<<tab[j].brand<<endl;
+                outputFile<<"Colour: "<<tab[j].colour<<endl;
+                outputFile<<"Year: "<<tab[j].year<<endl<<endl;
+
+            }
+
+            outputFile.close();
+
+
+        }
+    }
+
+    inputFile.close();
+
+
+
+
+    return 0;
+}
+
+/*
+
+
+cout << "enter the name of the brand: " << endl;
+			string new_brand;
+			cin >> new_brand;
+			cout << "enter the year of production: " << endl;
+			int new_year;
+			cin >> new_year;
+			cout << "enter the car's capacity: " << endl;
+			float new_capacity;
+			cin >> new_capacity;
+			cars new_car(new_brand, new_year, new_capacity);
+			list.push_back(new_car);
+			cout << " " << endl;
+			cout << "new car has been added!" << endl;
+*/
